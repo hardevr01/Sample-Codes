@@ -1,0 +1,33 @@
+def read_and_cleanse_data(feature_params,startdate):
+    '''
+    Function reads and cleanses data based on a 2-step procedure:
+    1) Read the master data from the table *masterInhibitionNavigator*
+       that will be used as data input for the cloud detection
+    2) Perform some ETL steps like cleaning the string values
+       or rounding continuous variables
+    
+    Parameters
+    ----------
+    feature_params : pd.DataFrame
+        DataFrame that contains which features should be used
+        to determine the clouds
+    startdate : str
+        Read data after *startdate*
+
+    
+    Returns
+    -------
+    pd.DataFrame
+        Cleansed data from the *masterInhibitionNavigator*
+        that will be used for cloud detection
+    '''
+    
+    # read camera data from the *masterInhibitionNavigator* table
+    df = read_camera_data(feature_params,startdate,_SHARE_INHIBIT)   
+
+    # perform the ETL steps    
+    df = perform_ETL_steps(df)
+    return df
+
+
+
